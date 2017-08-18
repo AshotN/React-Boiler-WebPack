@@ -4,21 +4,16 @@
   "description": "ES6 React Webpack templete",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm run production",
-    "start": "webpack-dev-server",
-    "clean": "rimraf dist",
-    "production": "cross-env npm run clean && webpack --config webpack.production.config.js --progress --profile --colors",
+    "start": "webpack && NODE_ENV=development nodemon app/server.js",
+    "clean": "rimraf public",
     "lint": "eslint app",
-    "test": "mocha --compilers js:babel-core/register --recursive ./tests/**/*.js",
-    "precommit": "cross-env npm run lint && npm test",
-    "prepush": "cross-env npm run lint && npm test"
+    "test": "mocha --compilers js:babel-core/register --recursive ./tests/**/*.js"
   },
   "dependencies": {
-    "cross-env": "^5.0.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-hot-loader": "^3.0.0-beta.6",
-    "react-router-dom": "^4.1.1"
+    "cross-env": "^5.0.5",
+    "react": "^15.6.1",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-router-dom": "^4.1.2"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -43,16 +38,19 @@
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "html-webpack-plugin": "2.28.0",
-    "husky": "0.13.3",
     "mocha": "3.4.2",
     "postcss-loader": "2.0.5",
+    "proxy-middleware": "^0.15.0",
     "react-addons-test-utils": "15.5.1",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "rimraf": "2.6.1",
     "style-loader": "0.18.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "url-loader": "0.5.8",
     "webpack": "2.6.1",
-    "webpack-dev-server": "2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }

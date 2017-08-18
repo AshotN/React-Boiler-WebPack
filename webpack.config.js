@@ -3,21 +3,23 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-	devtool: 'cheap-module-eval-source-map',
+	// devtool: 'cheap-module-eval-source-map',
+	devtool: 'inline-source-map',
 
 	entry: [
 		'react-hot-loader/patch',
 		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/only-dev-server',
+		'webpack/hot/dev-server',
 		'./main.js',
-		'./assets/stylus/index.styl',
+		'./assets/stylus/index.styl'
 	],
 
 	output: {
 		filename: 'bundle.js',
-		path: resolve(__dirname, 'dist'),
+		path: resolve(__dirname, 'public'),
 		publicPath: '/',
 	},
 
@@ -25,8 +27,10 @@ const config = {
 
 	devServer: {
 		hot: true,
-		contentBase: resolve(__dirname, 'dist'),
+		contentBase: resolve(__dirname, 'public'),
 		publicPath: '/',
+		historyApiFallback: true,
+		port: 8080
 	},
 
 	module: {
@@ -56,13 +60,22 @@ const config = {
 			},
 			{test: /\.(png|jpg)$/, use: 'url-loader?limit=15000'},
 			{test: /\.eot(\?v=\d+.\d+.\d+)?$/, use: 'file-loader'},
-			{test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff'},
-			{test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/octet-stream'},
-			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=image/svg+xml'},
+			{test: /\.(eot|svg|ttf|woff|woff2)$/, use: 'file-loader?name=fonts/[name].[ext]'},
 		]
 	},
-
+	//For request to work...https://github.com/request/request/issues/1529
+	node: {
+		console: true,
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty'
+	},
 	plugins: [
+		new HtmlWebpackPlugin({
+			template: `${__dirname}/app/index.html`,
+			filename: 'index.html',
+			inject: 'body',
+		}),
 		new ExtractTextPlugin({filename: 'style.css', disable: false, allChunks: true}),
 		new CopyWebpackPlugin([{from: 'vendors', to: 'vendors'}]),
 		new webpack.HotModuleReplacementPlugin(),

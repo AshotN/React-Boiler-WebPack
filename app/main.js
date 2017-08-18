@@ -20,4 +20,13 @@ if(module.hot) {
 		const newApp = require('./Router').default;
 		render(newApp);
 	});
+
+	//Hot reloading for CSS
+	let hotEmitter = require("webpack/hot/emitter");
+	hotEmitter.on("webpackHotUpdate", function(currentHash) {
+		document.querySelectorAll('link[href][rel=stylesheet]').forEach((link) => {
+			const nextStyleHref = link.href.replace(/(\?\d+)?$/, `?${Date.now()}`)
+			link.href = nextStyleHref
+		})
+	})
 }
