@@ -1,6 +1,6 @@
 require('babel-core/register');
 
-const port = 8081;
+const port = 9532;
 
 const path = require('path');
 const webpack = require('webpack');
@@ -23,13 +23,14 @@ if (process.env.NODE_ENV === 'development') {
 	let server = new WebpackDevServer(webpack(config), config.devServer);
 	server.listen(config.devServer.port, 'localhost', function(err) {});
 	app.use(WebpackHotMiddleware(compiler));
-	app.use('/', proxy(url.parse('http://localhost:8080/')));
+	app.use('/', proxy(url.parse('http://localhost:9533/')));
 	// app.get("*", function (req, res) {
 	// 	res.sendFile(path.join(__dirname, "../public/index.html"));
 	// });
 }
 
 if (process.env.NODE_ENV === 'production') {
+	//TODO
 	// const indexPath = path.resolve(__dirname, '../dist/index.html');
 	// app.get('/', (req, res) => res.sendFile(indexPath));
 }

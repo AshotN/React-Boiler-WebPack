@@ -11,7 +11,7 @@ const config = {
 
 	entry: [
 		'react-hot-loader/patch',
-		'webpack-dev-server/client?http://localhost:8080',
+		'webpack-dev-server/client?http://insurance.hego.co',
 		'webpack/hot/dev-server',
 		'./main.js',
 		'./assets/stylus/index.styl'
@@ -22,7 +22,10 @@ const config = {
 		path: resolve(__dirname, 'public'),
 		publicPath: '/',
 	},
-
+	watchOptions: {
+		aggregateTimeout: 300,
+		poll: 1000
+	},
 	context: resolve(__dirname, 'app'),
 
 	devServer: {
@@ -30,7 +33,8 @@ const config = {
 		contentBase: resolve(__dirname, 'public'),
 		publicPath: '/',
 		historyApiFallback: true,
-		port: 8080
+		disableHostCheck: true,
+		port: 9533
 	},
 
 	module: {
@@ -49,6 +53,7 @@ const config = {
 					fallback: 'style-loader',
 					use: [
 						'css-loader',
+						`postcss-loader`,
 						{
 							loader: 'stylus-loader',
 							query: {
@@ -79,6 +84,7 @@ const config = {
 		new ExtractTextPlugin({filename: 'style.css', disable: false, allChunks: true}),
 		new CopyWebpackPlugin([{from: 'vendors', to: 'vendors'}]),
 		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin()
 	],
 };
 
