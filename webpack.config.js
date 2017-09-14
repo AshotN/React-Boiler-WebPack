@@ -11,7 +11,7 @@ const config = {
 
 	entry: [
 		'react-hot-loader/patch',
-		'webpack-dev-server/client?http://insurance.hego.co',
+		'webpack-dev-server/client?http://localhost',
 		'webpack/hot/dev-server',
 		'./main.js',
 		'./assets/stylus/index.styl'
